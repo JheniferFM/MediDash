@@ -20,7 +20,7 @@ As capturas de tela abaixo mostram a aplicação em funcionamento. Todas as info
 
 Dashboard
 
-![Dashboard](docs/screenshots/img/dashboard.png)
+![Dashboard](C:\laragon\www\MediDash\docs\screenshots\img\dashboard.png)
 
 Patients
 
