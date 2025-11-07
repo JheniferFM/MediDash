@@ -12,6 +12,28 @@ MediDash is a modern, secure, and fast platform for managing clinics and hospita
 - Fast build pipeline with Vite
 - Automated tests with PHPUnit (Pest-ready structure)
 
+## Screenshots
+
+As capturas de tela abaixo mostram a aplicação em funcionamento. Todas as informações visíveis (nomes, e‑mails, telefones, números, gráficos, etc.) são dados fictícios gerados apenas para demonstração — não representam pessoas, instituições ou registros reais.
+
+> As imagens estão referenciadas a partir de `docs/screenshots/img/`. Caso visualizadas no GitHub e não apareçam, verifique se os arquivos foram adicionados ao repositório com os nomes indicados.
+
+Dashboard
+
+![Dashboard](docs/screenshots/img/dashboard.png)
+
+Patients
+
+![Patients](docs/screenshots/img/patients.png)
+
+Doctors
+
+![Doctors](docs/screenshots/img/doctors.png)
+
+Exams
+
+![Exams](docs/screenshots/img/exams.png)
+
 ## Tech Stack
 - Backend: `Laravel 10`, `PHP 8.x`, `Sanctum`, `Eloquent ORM`
 - Frontend: `Vue 3`, `Pinia`, `Vue Router`, `Axios`, `Vite`
@@ -82,12 +104,8 @@ Open: `http://127.0.0.1:8000/`
 ## Authentication & RBAC
 - Authentication uses Sanctum personal access tokens.
 - API responses from `login` and `register` include the user and their `roles`.
-- Frontend route guards check `requiresAuth`, `guestOnly`, and allowed `roles` per route.
-  - Patients: `admin`, `receptionist`
-  - Doctors: `admin`
-  - Appointments: `admin`, `receptionist`, `doctor`
-  - Exams: `admin`, `doctor`
-  - Prescriptions: `admin`, `doctor`
+- Frontend: atualmente as rotas exigem apenas que o usuário esteja autenticado (sem checagem de papéis). Caso necessário, a checagem por papéis pode ser reativada no router.
+- Backend: as Policies/Middlewares podem continuar aplicando regras de permissão por papéis.
 
 ## Frontend SPA
 - Views:
