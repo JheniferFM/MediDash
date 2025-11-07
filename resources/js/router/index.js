@@ -14,11 +14,11 @@ const routes = [
   { path: '/', name: 'dashboard', component: Dashboard, meta: { requiresAuth: true } },
   { path: '/login', name: 'login', component: Login, meta: { guestOnly: true } },
   { path: '/register', name: 'register', component: Register, meta: { guestOnly: true } },
-  { path: '/patients', name: 'patients', component: Patients, meta: { requiresAuth: true, roles: ['admin','receptionist'] } },
-  { path: '/doctors', name: 'doctors', component: Doctors, meta: { requiresAuth: true, roles: ['admin'] } },
-  { path: '/appointments', name: 'appointments', component: Appointments, meta: { requiresAuth: true, roles: ['admin','receptionist','doctor'] } },
-  { path: '/exams', name: 'exams', component: Exams, meta: { requiresAuth: true, roles: ['admin','doctor'] } },
-  { path: '/prescriptions', name: 'prescriptions', component: Prescriptions, meta: { requiresAuth: true, roles: ['admin','doctor'] } },
+  { path: '/patients', name: 'patients', component: Patients, meta: { requiresAuth: true } },
+  { path: '/doctors', name: 'doctors', component: Doctors, meta: { requiresAuth: true } },
+  { path: '/appointments', name: 'appointments', component: Appointments, meta: { requiresAuth: true } },
+  { path: '/exams', name: 'exams', component: Exams, meta: { requiresAuth: true } },
+  { path: '/prescriptions', name: 'prescriptions', component: Prescriptions, meta: { requiresAuth: true } },
 ];
 
 export const router = createRouter({
@@ -29,18 +29,12 @@ export const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = useAuthStore();
   if (to.meta.requiresAuth && !store.isAuthenticated) {
+    // Opcional: feedback de login necessário
+    try { window.alert('Faça login para acessar esta página.'); } catch {}
     return next({ name: 'login', query: { redirect: to.fullPath } });
   }
   if (to.meta.guestOnly && store.isAuthenticated) {
     return next({ name: 'dashboard' });
-  }
-  // Role-based guard
-  if (to.meta.roles && Array.isArray(to.meta.roles)) {
-    const userRoles = Array.isArray(store.user?.roles) ? (store.user.roles.map(r => r.slug)) : [];
-    const allowed = to.meta.roles.some(role => userRoles.includes(role));
-    if (!allowed) {
-      return next({ name: 'dashboard' });
-    }
   }
   next();
 });

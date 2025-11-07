@@ -9,7 +9,14 @@ export const useAuthStore = defineStore('auth', {
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
-    roles: (state) => Array.isArray(state.user?.roles) ? state.user.roles.map(r => r.slug) : [],
+    roles: (state) => {
+      const list = Array.isArray(state.user?.roles) ? state.user.roles : [];
+      // Suporta bancos sem coluna 'slug' (usa name como fallback) e normaliza valores
+      return list
+        .map(r => r?.slug || (r?.name ? String(r.name).toLowerCase() : null))
+        .map(s => (s === 'administrator' ? 'admin' : s))
+        .filter(Boolean);
+    },
   },
   actions: {
     setToken(token) {

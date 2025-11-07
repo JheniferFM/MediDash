@@ -13,12 +13,41 @@
           <h1 class="text-xl font-semibold text-primary">MediDash</h1>
         </div>
         <nav class="flex gap-4 text-sm">
-          <router-link to="/" class="text-secondary hover:text-[color:var(--brand-primary)]">Dashboard</router-link>
-          <router-link to="/patients" class="text-secondary hover:text-[color:var(--brand-primary)]">Patients</router-link>
-          <router-link to="/doctors" class="text-secondary hover:text-[color:var(--brand-primary)]">Doctors</router-link>
-          <router-link to="/appointments" class="text-secondary hover:text-[color:var(--brand-primary)]">Appointments</router-link>
-          <router-link to="/exams" class="text-secondary hover:text-[color:var(--brand-primary)]">Exams</router-link>
-          <router-link to="/prescriptions" class="text-secondary hover:text-[color:var(--brand-primary)]">Prescriptions</router-link>
+          <router-link
+            to="/"
+            :class="linkClass(canDashboard)"
+            :title="canDashboard ? '' : 'Faça login para acessar'"
+          >Dashboard</router-link>
+
+          <router-link
+            to="/patients"
+            :class="linkClass(canPatients)"
+            :title="canPatients ? '' : 'Requer papel admin ou receptionist'"
+          >Patients</router-link>
+
+          <router-link
+            to="/doctors"
+            :class="linkClass(canDoctors)"
+            :title="canDoctors ? '' : 'Requer papel admin'"
+          >Doctors</router-link>
+
+          <router-link
+            to="/appointments"
+            :class="linkClass(canAppointments)"
+            :title="canAppointments ? '' : 'Requer admin, receptionist ou doctor'"
+          >Appointments</router-link>
+
+          <router-link
+            to="/exams"
+            :class="linkClass(canExams)"
+            :title="canExams ? '' : 'Requer admin ou doctor'"
+          >Exams</router-link>
+
+          <router-link
+            to="/prescriptions"
+            :class="linkClass(canPrescriptions)"
+            :title="canPrescriptions ? '' : 'Requer admin ou doctor'"
+          >Prescriptions</router-link>
         </nav>
         <div class="ml-auto">
           <AuthBar />
@@ -32,7 +61,26 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import AuthBar from './components/AuthBar.vue';
+import { useAuthStore } from './stores/auth';
+
+const store = useAuthStore();
+const isAuth = computed(() => store.isAuthenticated);
+const roles = computed(() => store.roles || []);
+const has = (role) => roles.value.includes(role);
+
+// Permissões por item
+const canDashboard = computed(() => isAuth.value);
+const canPatients = computed(() => isAuth.value);
+const canDoctors = computed(() => isAuth.value);
+const canAppointments = computed(() => isAuth.value);
+const canExams = computed(() => isAuth.value);
+const canPrescriptions = computed(() => isAuth.value);
+
+// Helpers de UI
+const baseLinkClass = 'text-secondary hover:text-[color:var(--brand-primary)]';
+const linkClass = (allowed) => allowed ? baseLinkClass : baseLinkClass + ' opacity-50';
 </script>
 
 <style>

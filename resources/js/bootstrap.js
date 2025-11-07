@@ -4,6 +4,7 @@ import { useAuthStore } from './stores/auth';
 window.axios = axios;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.baseURL = '/api';
+axios.defaults.headers.common['Accept'] = 'application/json';
 
 // Inicializa Authorization a partir do localStorage para persistência após reload
 try {
