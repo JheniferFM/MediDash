@@ -14,9 +14,9 @@ MediDash is a modern, secure, and fast platform for managing clinics and hospita
 
 ## Screenshots
 
-As capturas de tela abaixo mostram a aplicação em funcionamento. Todas as informações visíveis (nomes, e‑mails, telefones, números, gráficos, etc.) são dados fictícios gerados apenas para demonstração — não representam pessoas, instituições ou registros reais.
+The screenshots below show the application in operation. All visible information (names, emails, phone numbers, graphs, etc.) is fictitious data generated for demonstration purposes only—it does not represent real people, institutions, or records.
 
-> As imagens estão referenciadas a partir de `docs/screenshots/img/`. Caso visualizadas no GitHub e não apareçam, verifique se os arquivos foram adicionados ao repositório com os nomes indicados.
+
 
 Dashboard
 
